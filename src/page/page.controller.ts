@@ -11,11 +11,16 @@ import {
 } from '@nestjs/common';
 import { PageModel } from './page.model';
 import { FindPageDto } from './dto/find-page.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('page')
 export class PageController {
+  constructor(private readonly configService: ConfigService) {}
+
   @Post('create')
-  async create(@Body() dto: Omit<PageModel, '_id'>) {}
+  async create(@Body() dto: Omit<PageModel, '_id'>) {
+    this.configService.get('BD');
+  }
 
   @Get(':id')
   async getById(@Param('id') id: string) {}
